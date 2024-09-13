@@ -1,0 +1,24 @@
+services:
+  db:
+    container_name: spring_security_postgres
+    image: postgres:12.20-alpine3.20
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: mintesnot
+      POSTGRES_PASSWORD: mintesnot
+      PGDATA: /data/postgres
+    volumes:
+      - pgdata:/data/postgres
+  spring:
+    container_name: secuirty_spring
+    build: 
+      context: .
+    restart: always
+    ports:
+      - 80:8080
+    depends_on:
+      - db
+
+
+volumes:
+  pgdata:
